@@ -5,7 +5,7 @@
 #pragma config FOSC=INTOSC_EC //Sentencia para usar oscilador externo
 #pragma config WDT=OFF //Apagar el perro guardian
 #pragma config PBADEN=OFF 
-#pragma LVP=OFF
+#pragma config LVP=OFF
 
 #define _XTAL_FREQ 8000000 //Frecuencia de reloj
 #define DATA_DIR TRISC2
@@ -57,7 +57,7 @@ void main(void) {
     TRISC = 0b11110110; //Pin C0 salida LED  y C1 como entrada (seleccion entrada) C2- SENSOR, C4, C5-  seleccion unidad  RC6 como entrada TX, para lectura RC7 RX
     RBPU = 0; //Activar resistencias pull up
     DATA_OUT = 0;
-    TempEEPROM = ReadData_EEPROM(0);
+    Temperatura_EEPROM = ReadData_EEPROM(0);
     
     ConfiguraLCD(4);
     InicializaLCD(); //Funcion para configuracion inicial del LCD
@@ -73,17 +73,17 @@ void main(void) {
    
     BorraLCD(); //Limpiar el LCD
 
-    if (TempEEPROM != 0xFF) {
-        MensajeLCD_Word("Ultima temp:");
+    if (Temperatura_EEPROM != 0xFF) {
+        MensajeLCD_Var("Ultima temp:");
         DireccionaLCD(192);
-        EscribeLCD_c(TempEEPROM / 10 + 48);
-        EscribeLCD_c(TempEEPROM % 10 + 48);
+        EscribeLCD_c(Temperatura_EEPROM / 10 + 48);
+        EscribeLCD_c(Temperatura_EEPROM % 10 + 48);
         EscribeLCD_c('C');
         __delay_ms(2000);
         BorraLCD();
     }
     
-    MensajeLCD_Word("Iniciando"); //Escribir mensaje de bienvenida
+    MensajeLCD_Var("Iniciando"); //Escribir mensaje de bienvenida
     __delay_ms(500); //Retraso para evitar errores
     EscribeLCD_c(46);
     __delay_ms(500);
@@ -204,7 +204,7 @@ void TransmitirDatos(unsigned int Ent1, unsigned int Ent2) {
     Transmitir(':');
     Transmitir(' ');
 
-    MensajeLCD_Word("Temperatura:");
+    MensajeLCD_Var("Temperatura:");
     if (TemperaturaC / 100 > 0) {
         Transmitir(TemperaturaC / 100 + 48);
         EscribeLCD_c(TemperaturaC / 100 + 48);
@@ -238,7 +238,7 @@ void TransmitirDatos(unsigned int Ent1, unsigned int Ent2) {
     EscribeLCD_c(TemperaturaC % 10 + 48);
     EscribeLCD_c(Simb);
     DireccionaLCD(192);
-    MensajeLCD_Word("Humedad:");
+    MensajeLCD_Var("Humedad:");
     EscribeLCD_c(Humedad / 10 + 48);
     EscribeLCD_c(Humedad % 10 + 48);
     EscribeLCD_c('%');
