@@ -223,6 +223,7 @@ void TransmitirDatos(unsigned int Ent1, unsigned int Ent2) {
     EscribeLCD_c(TempC % 10 + 48);
     if (Simb==70 | Simb == 67) EscribeLCD_c(223);
     EscribeLCD_c(Simb);
+    EscribeLCD_c(' ');
     DireccionaLCD(0xC4);
     EscribeLCD_c(Hum / 10 + 48);
     EscribeLCD_c(Hum % 10 + 48);

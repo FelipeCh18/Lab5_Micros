@@ -4811,158 +4811,161 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;Lab5.c: 225: EscribeLCD_c(Simb);
 "225
 [e ( _EscribeLCD_c (1 -> _Simb `uc ]
-[; ;Lab5.c: 226: DireccionaLCD(0xC4);
+[; ;Lab5.c: 226: EscribeLCD_c(' ');
 "226
-[e ( _DireccionaLCD (1 -> -> 196 `i `uc ]
-[; ;Lab5.c: 227: EscribeLCD_c(Hum / 10 + 48);
+[e ( _EscribeLCD_c (1 -> -> 32 `ui `uc ]
+[; ;Lab5.c: 227: DireccionaLCD(0xC4);
 "227
-[e ( _EscribeLCD_c (1 -> + / -> _Hum `i -> 10 `i -> 48 `i `uc ]
-[; ;Lab5.c: 228: EscribeLCD_c(Hum % 10 + 48);
+[e ( _DireccionaLCD (1 -> -> 196 `i `uc ]
+[; ;Lab5.c: 228: EscribeLCD_c(Hum / 10 + 48);
 "228
-[e ( _EscribeLCD_c (1 -> + % -> _Hum `i -> 10 `i -> 48 `i `uc ]
-[; ;Lab5.c: 229: EscribeLCD_c('%');
+[e ( _EscribeLCD_c (1 -> + / -> _Hum `i -> 10 `i -> 48 `i `uc ]
+[; ;Lab5.c: 229: EscribeLCD_c(Hum % 10 + 48);
 "229
+[e ( _EscribeLCD_c (1 -> + % -> _Hum `i -> 10 `i -> 48 `i `uc ]
+[; ;Lab5.c: 230: EscribeLCD_c('%');
+"230
 [e ( _EscribeLCD_c (1 -> -> 37 `ui `uc ]
-[; ;Lab5.c: 231: }
-"231
+[; ;Lab5.c: 232: }
+"232
 [e :UE 435 ]
 }
-"233
+"234
 [v _ColorRGB `(v ~T0 @X0 1 ef1`ui ]
 {
-[; ;Lab5.c: 233: void ColorRGB(unsigned int val) {
+[; ;Lab5.c: 234: void ColorRGB(unsigned int val) {
 [e :U _ColorRGB ]
 [v _val `ui ~T0 @X0 1 r1 ]
 [f ]
-[; ;Lab5.c: 234: if (val < 22) {
-"234
+[; ;Lab5.c: 235: if (val < 22) {
+"235
 [e $ ! < _val -> -> 22 `i `ui 446  ]
 {
-[; ;Lab5.c: 235: RB5 = 0;
-"235
-[e = _RB5 -> -> 0 `i `b ]
-[; ;Lab5.c: 236: RB6 = 0;
+[; ;Lab5.c: 236: RB5 = 0;
 "236
-[e = _RB6 -> -> 0 `i `b ]
-[; ;Lab5.c: 237: RB7 = 0;
+[e = _RB5 -> -> 0 `i `b ]
+[; ;Lab5.c: 237: RB6 = 0;
 "237
-[e = _RB7 -> -> 0 `i `b ]
+[e = _RB6 -> -> 0 `i `b ]
+[; ;Lab5.c: 238: RB7 = 0;
 "238
+[e = _RB7 -> -> 0 `i `b ]
+"239
 }
-[; ;Lab5.c: 238: } else if (val >= 22 && val < 25) {
+[; ;Lab5.c: 239: } else if (val >= 22 && val < 25) {
 [e $U 447  ]
 [e :U 446 ]
 [e $ ! && >= _val -> -> 22 `i `ui < _val -> -> 25 `i `ui 448  ]
 {
-[; ;Lab5.c: 239: RB5 = 1;
-"239
-[e = _RB5 -> -> 1 `i `b ]
-[; ;Lab5.c: 240: RB6 = 0;
+[; ;Lab5.c: 240: RB5 = 1;
 "240
-[e = _RB6 -> -> 0 `i `b ]
-[; ;Lab5.c: 241: RB7 = 1;
+[e = _RB5 -> -> 1 `i `b ]
+[; ;Lab5.c: 241: RB6 = 0;
 "241
-[e = _RB7 -> -> 1 `i `b ]
+[e = _RB6 -> -> 0 `i `b ]
+[; ;Lab5.c: 242: RB7 = 1;
 "242
+[e = _RB7 -> -> 1 `i `b ]
+"243
 }
-[; ;Lab5.c: 242: } else if (val >= 25 && val < 28) {
+[; ;Lab5.c: 243: } else if (val >= 25 && val < 28) {
 [e $U 449  ]
 [e :U 448 ]
 [e $ ! && >= _val -> -> 25 `i `ui < _val -> -> 28 `i `ui 450  ]
 {
-[; ;Lab5.c: 243: RB5 = 1;
-"243
-[e = _RB5 -> -> 1 `i `b ]
-[; ;Lab5.c: 244: RB6 = 0;
+[; ;Lab5.c: 244: RB5 = 1;
 "244
-[e = _RB6 -> -> 0 `i `b ]
-[; ;Lab5.c: 245: RB7 = 0;
+[e = _RB5 -> -> 1 `i `b ]
+[; ;Lab5.c: 245: RB6 = 0;
 "245
-[e = _RB7 -> -> 0 `i `b ]
+[e = _RB6 -> -> 0 `i `b ]
+[; ;Lab5.c: 246: RB7 = 0;
 "246
+[e = _RB7 -> -> 0 `i `b ]
+"247
 }
-[; ;Lab5.c: 246: } else if (val >= 28 && val < 31) {
+[; ;Lab5.c: 247: } else if (val >= 28 && val < 31) {
 [e $U 451  ]
 [e :U 450 ]
 [e $ ! && >= _val -> -> 28 `i `ui < _val -> -> 31 `i `ui 452  ]
 {
-[; ;Lab5.c: 247: RB5 = 1;
-"247
-[e = _RB5 -> -> 1 `i `b ]
-[; ;Lab5.c: 248: RB6 = 1;
+[; ;Lab5.c: 248: RB5 = 1;
 "248
-[e = _RB6 -> -> 1 `i `b ]
-[; ;Lab5.c: 249: RB7 = 0;
+[e = _RB5 -> -> 1 `i `b ]
+[; ;Lab5.c: 249: RB6 = 1;
 "249
-[e = _RB7 -> -> 0 `i `b ]
+[e = _RB6 -> -> 1 `i `b ]
+[; ;Lab5.c: 250: RB7 = 0;
 "250
+[e = _RB7 -> -> 0 `i `b ]
+"251
 }
-[; ;Lab5.c: 250: } else if (val >= 31 && val < 34) {
+[; ;Lab5.c: 251: } else if (val >= 31 && val < 34) {
 [e $U 453  ]
 [e :U 452 ]
 [e $ ! && >= _val -> -> 31 `i `ui < _val -> -> 34 `i `ui 454  ]
 {
-[; ;Lab5.c: 251: RB5 = 0;
-"251
-[e = _RB5 -> -> 0 `i `b ]
-[; ;Lab5.c: 252: RB6 = 1;
+[; ;Lab5.c: 252: RB5 = 0;
 "252
-[e = _RB6 -> -> 1 `i `b ]
-[; ;Lab5.c: 253: RB7 = 0;
+[e = _RB5 -> -> 0 `i `b ]
+[; ;Lab5.c: 253: RB6 = 1;
 "253
-[e = _RB7 -> -> 0 `i `b ]
+[e = _RB6 -> -> 1 `i `b ]
+[; ;Lab5.c: 254: RB7 = 0;
 "254
+[e = _RB7 -> -> 0 `i `b ]
+"255
 }
-[; ;Lab5.c: 254: } else if (val >= 34 && val < 37) {
+[; ;Lab5.c: 255: } else if (val >= 34 && val < 37) {
 [e $U 455  ]
 [e :U 454 ]
 [e $ ! && >= _val -> -> 34 `i `ui < _val -> -> 37 `i `ui 456  ]
 {
-[; ;Lab5.c: 255: RB5 = 0;
-"255
-[e = _RB5 -> -> 0 `i `b ]
-[; ;Lab5.c: 256: RB6 = 1;
+[; ;Lab5.c: 256: RB5 = 0;
 "256
-[e = _RB6 -> -> 1 `i `b ]
-[; ;Lab5.c: 257: RB7 = 1;
+[e = _RB5 -> -> 0 `i `b ]
+[; ;Lab5.c: 257: RB6 = 1;
 "257
-[e = _RB7 -> -> 1 `i `b ]
+[e = _RB6 -> -> 1 `i `b ]
+[; ;Lab5.c: 258: RB7 = 1;
 "258
+[e = _RB7 -> -> 1 `i `b ]
+"259
 }
-[; ;Lab5.c: 258: } else if (val >= 37 && val < 42) {
+[; ;Lab5.c: 259: } else if (val >= 37 && val < 42) {
 [e $U 457  ]
 [e :U 456 ]
 [e $ ! && >= _val -> -> 37 `i `ui < _val -> -> 42 `i `ui 458  ]
 {
-[; ;Lab5.c: 259: RB5 = 0;
-"259
-[e = _RB5 -> -> 0 `i `b ]
-[; ;Lab5.c: 260: RB6 = 0;
+[; ;Lab5.c: 260: RB5 = 0;
 "260
-[e = _RB6 -> -> 0 `i `b ]
-[; ;Lab5.c: 261: RB7 = 1;
+[e = _RB5 -> -> 0 `i `b ]
+[; ;Lab5.c: 261: RB6 = 0;
 "261
-[e = _RB7 -> -> 1 `i `b ]
+[e = _RB6 -> -> 0 `i `b ]
+[; ;Lab5.c: 262: RB7 = 1;
 "262
+[e = _RB7 -> -> 1 `i `b ]
+"263
 }
-[; ;Lab5.c: 262: } else if (val >= 42) {
+[; ;Lab5.c: 263: } else if (val >= 42) {
 [e $U 459  ]
 [e :U 458 ]
 [e $ ! >= _val -> -> 42 `i `ui 460  ]
 {
-[; ;Lab5.c: 263: RB5 = 1;
-"263
-[e = _RB5 -> -> 1 `i `b ]
-[; ;Lab5.c: 264: RB6 = 1;
+[; ;Lab5.c: 264: RB5 = 1;
 "264
-[e = _RB6 -> -> 1 `i `b ]
-[; ;Lab5.c: 265: RB7 = 1;
+[e = _RB5 -> -> 1 `i `b ]
+[; ;Lab5.c: 265: RB6 = 1;
 "265
-[e = _RB7 -> -> 1 `i `b ]
+[e = _RB6 -> -> 1 `i `b ]
+[; ;Lab5.c: 266: RB7 = 1;
 "266
+[e = _RB7 -> -> 1 `i `b ]
+"267
 }
 [e :U 460 ]
-"267
+"268
 [e :U 459 ]
 [e :U 457 ]
 [e :U 455 ]
@@ -4970,228 +4973,228 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 451 ]
 [e :U 449 ]
 [e :U 447 ]
-[; ;Lab5.c: 266: }
 [; ;Lab5.c: 267: }
+[; ;Lab5.c: 268: }
 [e :UE 445 ]
 }
-"269
+"270
 [v _Conversion `(ui ~T0 @X0 1 ef1`uc ]
 {
-[; ;Lab5.c: 269: unsigned int Conversion(unsigned char canal) {
+[; ;Lab5.c: 270: unsigned int Conversion(unsigned char canal) {
 [e :U _Conversion ]
 [v _canal `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;Lab5.c: 270: ADCON0 = 0b00000001 | (canal << 2);
-"270
-[e = _ADCON0 -> | -> 1 `i << -> _canal `i -> 2 `i `uc ]
-[; ;Lab5.c: 271: GO = 1;
+[; ;Lab5.c: 271: ADCON0 = 0b00000001 | (canal << 2);
 "271
-[e = _GO -> -> 1 `i `b ]
-[; ;Lab5.c: 272: while (GO == 1);
+[e = _ADCON0 -> | -> 1 `i << -> _canal `i -> 2 `i `uc ]
+[; ;Lab5.c: 272: GO = 1;
 "272
+[e = _GO -> -> 1 `i `b ]
+[; ;Lab5.c: 273: while (GO == 1);
+"273
 [e $U 462  ]
 [e :U 463 ]
 [e :U 462 ]
 [e $ == -> _GO `i -> 1 `i 463  ]
 [e :U 464 ]
-[; ;Lab5.c: 273: return ADRES;
-"273
+[; ;Lab5.c: 274: return ADRES;
+"274
 [e ) -> _ADRES `ui ]
 [e $UE 461  ]
-[; ;Lab5.c: 274: }
-"274
+[; ;Lab5.c: 275: }
+"275
 [e :UE 461 ]
 }
-"276
+"277
 [v _GuardarDatoEnEEPROM `(v ~T0 @X0 1 ef2`ui`uc ]
 {
-[; ;Lab5.c: 276: void GuardarDatoEnEEPROM(unsigned int dir, unsigned char dato) {
+[; ;Lab5.c: 277: void GuardarDatoEnEEPROM(unsigned int dir, unsigned char dato) {
 [e :U _GuardarDatoEnEEPROM ]
 [v _dir `ui ~T0 @X0 1 r1 ]
 [v _dato `uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;Lab5.c: 277: EEADR = dir;
-"277
-[e = _EEADR -> _dir `uc ]
-[; ;Lab5.c: 278: EEDATA = dato;
+[; ;Lab5.c: 278: EEADR = dir;
 "278
+[e = _EEADR -> _dir `uc ]
+[; ;Lab5.c: 279: EEDATA = dato;
+"279
 [e = _EEDATA _dato ]
-[; ;Lab5.c: 280: EEPGD = 0;
-"280
-[e = _EEPGD -> -> 0 `i `b ]
-[; ;Lab5.c: 281: CFGS = 0;
+[; ;Lab5.c: 281: EEPGD = 0;
 "281
-[e = _CFGS -> -> 0 `i `b ]
-[; ;Lab5.c: 282: WREN = 1;
+[e = _EEPGD -> -> 0 `i `b ]
+[; ;Lab5.c: 282: CFGS = 0;
 "282
+[e = _CFGS -> -> 0 `i `b ]
+[; ;Lab5.c: 283: WREN = 1;
+"283
 [e = _WREN -> -> 1 `i `b ]
-[; ;Lab5.c: 284: GIE = 0;
-"284
+[; ;Lab5.c: 285: GIE = 0;
+"285
 [e = _GIE -> -> 0 `i `b ]
-[; ;Lab5.c: 286: EECON2 = 0x55;
-"286
-[e = _EECON2 -> -> 85 `i `uc ]
-[; ;Lab5.c: 287: EECON2 = 0xAA;
+[; ;Lab5.c: 287: EECON2 = 0x55;
 "287
-[e = _EECON2 -> -> 170 `i `uc ]
-[; ;Lab5.c: 288: WR = 1;
+[e = _EECON2 -> -> 85 `i `uc ]
+[; ;Lab5.c: 288: EECON2 = 0xAA;
 "288
-[e = _WR -> -> 1 `i `b ]
-[; ;Lab5.c: 289: GIE = 1;
+[e = _EECON2 -> -> 170 `i `uc ]
+[; ;Lab5.c: 289: WR = 1;
 "289
-[e = _GIE -> -> 1 `i `b ]
-[; ;Lab5.c: 290: while (!EEIF);
+[e = _WR -> -> 1 `i `b ]
+[; ;Lab5.c: 290: GIE = 1;
 "290
+[e = _GIE -> -> 1 `i `b ]
+[; ;Lab5.c: 291: while (!EEIF);
+"291
 [e $U 466  ]
 [e :U 467 ]
 [e :U 466 ]
 [e $ ! _EEIF 467  ]
 [e :U 468 ]
-[; ;Lab5.c: 291: EEIF = 0;
-"291
-[e = _EEIF -> -> 0 `i `b ]
-[; ;Lab5.c: 292: WREN = 0;
+[; ;Lab5.c: 292: EEIF = 0;
 "292
+[e = _EEIF -> -> 0 `i `b ]
+[; ;Lab5.c: 293: WREN = 0;
+"293
 [e = _WREN -> -> 0 `i `b ]
-[; ;Lab5.c: 294: }
-"294
+[; ;Lab5.c: 295: }
+"295
 [e :UE 465 ]
 }
-"296
+"297
 [v _leerDatoEnEEPROM `(uc ~T0 @X0 1 ef1`ui ]
 {
-[; ;Lab5.c: 296: unsigned char leerDatoEnEEPROM(unsigned int dir) {
+[; ;Lab5.c: 297: unsigned char leerDatoEnEEPROM(unsigned int dir) {
 [e :U _leerDatoEnEEPROM ]
 [v _dir `ui ~T0 @X0 1 r1 ]
 [f ]
-[; ;Lab5.c: 297: EEADR = dir;
-"297
-[e = _EEADR -> _dir `uc ]
-[; ;Lab5.c: 298: EEPGD = 0;
+[; ;Lab5.c: 298: EEADR = dir;
 "298
-[e = _EEPGD -> -> 0 `i `b ]
-[; ;Lab5.c: 299: CFGS = 0;
+[e = _EEADR -> _dir `uc ]
+[; ;Lab5.c: 299: EEPGD = 0;
 "299
-[e = _CFGS -> -> 0 `i `b ]
-[; ;Lab5.c: 300: RD = 1;
+[e = _EEPGD -> -> 0 `i `b ]
+[; ;Lab5.c: 300: CFGS = 0;
 "300
+[e = _CFGS -> -> 0 `i `b ]
+[; ;Lab5.c: 301: RD = 1;
+"301
 [e = _RD -> -> 1 `i `b ]
-[; ;Lab5.c: 302: return EEDATA;
-"302
+[; ;Lab5.c: 303: return EEDATA;
+"303
 [e ) _EEDATA ]
 [e $UE 469  ]
-[; ;Lab5.c: 303: }
-"303
+[; ;Lab5.c: 304: }
+"304
 [e :UE 469 ]
 }
 [v $root$_ISR `(v ~T0 @X0 0 e ]
-"305
+"306
 [v _ISR `(v ~T47 @X0 1 ef ]
 {
-[; ;Lab5.c: 305: void __interrupt() ISR(void){
+[; ;Lab5.c: 306: void __interrupt() ISR(void){
 [e :U _ISR ]
 [f ]
-[; ;Lab5.c: 306: if(TMR0IF){
-"306
+[; ;Lab5.c: 307: if(TMR0IF){
+"307
 [e $ ! _TMR0IF 471  ]
 {
-[; ;Lab5.c: 307: TMR0IF=0;
-"307
-[e = _TMR0IF -> -> 0 `i `b ]
-[; ;Lab5.c: 308: RE2 = !RE2;
+[; ;Lab5.c: 308: TMR0IF=0;
 "308
-[e = _RE2 ! _RE2 ]
-[; ;Lab5.c: 309: TMR0 = 3036;
+[e = _TMR0IF -> -> 0 `i `b ]
+[; ;Lab5.c: 309: RE2 = !RE2;
 "309
+[e = _RE2 ! _RE2 ]
+[; ;Lab5.c: 310: TMR0 = 3036;
+"310
 [e = _TMR0 -> -> 3036 `i `us ]
-"311
+"312
 }
 [e :U 471 ]
-[; ;Lab5.c: 311: }
-[; ;Lab5.c: 312: if(RCIF){
-"312
+[; ;Lab5.c: 312: }
+[; ;Lab5.c: 313: if(RCIF){
+"313
 [e $ ! _RCIF 472  ]
 {
-[; ;Lab5.c: 313: switch (Recibir()){
-"313
+[; ;Lab5.c: 314: switch (Recibir()){
+"314
 [e $U 474  ]
 {
-[; ;Lab5.c: 314: case 'C':
-"314
-[e :U 475 ]
-[; ;Lab5.c: 315: A=0;
+[; ;Lab5.c: 315: case 'C':
 "315
-[e = _A -> -> 0 `i `ui ]
-[; ;Lab5.c: 316: B=0;
+[e :U 475 ]
+[; ;Lab5.c: 316: A=0;
 "316
-[e = _B -> -> 0 `i `ui ]
-[; ;Lab5.c: 317: break;
-"317
-[e $U 473  ]
-[; ;Lab5.c: 318: case 'K':
-"318
-[e :U 476 ]
-[; ;Lab5.c: 319: A=0;
-"319
 [e = _A -> -> 0 `i `ui ]
-[; ;Lab5.c: 320: B=1;
-"320
-[e = _B -> -> 1 `i `ui ]
-[; ;Lab5.c: 321: break;
-"321
-[e $U 473  ]
-[; ;Lab5.c: 322: case 'R':
-"322
-[e :U 477 ]
-[; ;Lab5.c: 323: A=1;
-"323
-[e = _A -> -> 1 `i `ui ]
-[; ;Lab5.c: 324: B=0;
-"324
+[; ;Lab5.c: 317: B=0;
+"317
 [e = _B -> -> 0 `i `ui ]
-[; ;Lab5.c: 325: break;
-"325
+[; ;Lab5.c: 318: break;
+"318
 [e $U 473  ]
-[; ;Lab5.c: 326: case 'F':
-"326
-[e :U 478 ]
-[; ;Lab5.c: 327: A=1;
-"327
-[e = _A -> -> 1 `i `ui ]
-[; ;Lab5.c: 328: B=1;
-"328
+[; ;Lab5.c: 319: case 'K':
+"319
+[e :U 476 ]
+[; ;Lab5.c: 320: A=0;
+"320
+[e = _A -> -> 0 `i `ui ]
+[; ;Lab5.c: 321: B=1;
+"321
 [e = _B -> -> 1 `i `ui ]
-[; ;Lab5.c: 329: break;
+[; ;Lab5.c: 322: break;
+"322
+[e $U 473  ]
+[; ;Lab5.c: 323: case 'R':
+"323
+[e :U 477 ]
+[; ;Lab5.c: 324: A=1;
+"324
+[e = _A -> -> 1 `i `ui ]
+[; ;Lab5.c: 325: B=0;
+"325
+[e = _B -> -> 0 `i `ui ]
+[; ;Lab5.c: 326: break;
+"326
+[e $U 473  ]
+[; ;Lab5.c: 327: case 'F':
+"327
+[e :U 478 ]
+[; ;Lab5.c: 328: A=1;
+"328
+[e = _A -> -> 1 `i `ui ]
+[; ;Lab5.c: 329: B=1;
 "329
-[e $U 473  ]
-[; ;Lab5.c: 330: default:
+[e = _B -> -> 1 `i `ui ]
+[; ;Lab5.c: 330: break;
 "330
-[e :U 479 ]
-[; ;Lab5.c: 331: break;
+[e $U 473  ]
+[; ;Lab5.c: 331: default:
 "331
-[e $U 473  ]
+[e :U 479 ]
+[; ;Lab5.c: 332: break;
 "332
-}
-[; ;Lab5.c: 332: }
 [e $U 473  ]
-"313
+"333
+}
+[; ;Lab5.c: 333: }
+[e $U 473  ]
+"314
 [e :U 474 ]
 [e [\ ( _Recibir ..  , $ -> -> 67 `ui `uc 475
  , $ -> -> 75 `ui `uc 476
  , $ -> -> 82 `ui `uc 477
  , $ -> -> 70 `ui `uc 478
  479 ]
-"332
-[e :U 473 ]
-[; ;Lab5.c: 333: _delay((unsigned long)((100)*(8000000/4000.0)));
 "333
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[e :U 473 ]
+[; ;Lab5.c: 334: _delay((unsigned long)((100)*(8000000/4000.0)));
 "334
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"335
 }
 [e :U 472 ]
-[; ;Lab5.c: 334: }
 [; ;Lab5.c: 335: }
-"335
+[; ;Lab5.c: 336: }
+"336
 [e :UE 470 ]
 }
 [a 2C 73 110 105 99 105 97 110 100 111 0 ]

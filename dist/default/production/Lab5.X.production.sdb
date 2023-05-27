@@ -53,15 +53,15 @@
 [v _Recibir Recibir `(uc  1 e 1 0 ]
 "169
 [v _TransmitirDatos TransmitirDatos `(v  1 e 1 0 ]
-"233
+"234
 [v _ColorRGB ColorRGB `(v  1 e 1 0 ]
-"269
+"270
 [v _Conversion Conversion `(ui  1 e 2 0 ]
-"276
+"277
 [v _GuardarDatoEnEEPROM GuardarDatoEnEEPROM `(v  1 e 1 0 ]
-"296
+"297
 [v _leerDatoEnEEPROM leerDatoEnEEPROM `(uc  1 e 1 0 ]
-"305
+"306
 [v _ISR ISR `IIH(v  1 e 1 0 ]
 "50 E:\Uni-Nacho\La Nacho\Microcontroladores\Lab5.X\LibLCDXC8.h
 [v _ConfiguraLCD ConfiguraLCD `(v  1 e 1 0 ]
@@ -200,11 +200,11 @@
 {
 "119
 } 0
-"296
+"297
 [v _leerDatoEnEEPROM leerDatoEnEEPROM `(uc  1 e 1 0 ]
 {
 [v leerDatoEnEEPROM@dir dir `ui  1 p 2 2 ]
-"303
+"304
 } 0
 "169
 [v _TransmitirDatos TransmitirDatos `(v  1 e 1 0 ]
@@ -218,7 +218,7 @@
 "169
 [v TransmitirDatos@Ent1 Ent1 `ui  1 p 2 10 ]
 [v TransmitirDatos@Ent2 Ent2 `ui  1 p 2 12 ]
-"231
+"232
 } 0
 "15 C:\Program Files\Microchip\xc8\v2.40\pic\sources\c90\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]
@@ -390,20 +390,20 @@
 {
 "104
 } 0
-"276 E:\Uni-Nacho\La Nacho\Microcontroladores\Lab5.X\Lab5.c
+"277 E:\Uni-Nacho\La Nacho\Microcontroladores\Lab5.X\Lab5.c
 [v _GuardarDatoEnEEPROM GuardarDatoEnEEPROM `(v  1 e 1 0 ]
 {
 [v GuardarDatoEnEEPROM@dir dir `ui  1 p 2 2 ]
 [v GuardarDatoEnEEPROM@dato dato `uc  1 p 1 4 ]
-"294
+"295
 } 0
-"269
+"270
 [v _Conversion Conversion `(ui  1 e 2 0 ]
 {
 [v Conversion@canal canal `uc  1 a 1 wreg ]
 [v Conversion@canal canal `uc  1 a 1 wreg ]
 [v Conversion@canal canal `uc  1 a 1 2 ]
-"274
+"275
 } 0
 "50 E:\Uni-Nacho\La Nacho\Microcontroladores\Lab5.X\LibLCDXC8.h
 [v _ConfiguraLCD ConfiguraLCD `(v  1 e 1 0 ]
@@ -413,16 +413,16 @@
 [v ConfiguraLCD@a a `uc  1 a 1 2 ]
 "53
 } 0
-"233 E:\Uni-Nacho\La Nacho\Microcontroladores\Lab5.X\Lab5.c
+"234 E:\Uni-Nacho\La Nacho\Microcontroladores\Lab5.X\Lab5.c
 [v _ColorRGB ColorRGB `(v  1 e 1 0 ]
 {
 [v ColorRGB@val val `ui  1 p 2 2 ]
-"267
+"268
 } 0
-"305
+"306
 [v _ISR ISR `IIH(v  1 e 1 0 ]
 {
-"335
+"336
 } 0
 "164
 [v _Recibir Recibir `(uc  1 e 1 0 ]
