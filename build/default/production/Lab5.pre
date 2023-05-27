@@ -5911,72 +5911,72 @@ EscribeLCD_c(mapeo [i]);
 #pragma config LVP=OFF
 
 # 15
-unsigned char Temperatura, Humedad, Che;
-unsigned char Temperatura_EEPROM;
+unsigned char Temp, Hum;
+unsigned char TempEEPROM;
 unsigned int A=0,B= 0;
 
 
 
 
-void LeerDHT11(void);
+void LeerHT11(void);
 unsigned char LeerByte(void);
 unsigned char LeerBit(void);
-unsigned char Check();
 void Transmitir(unsigned char);
 unsigned char Recibir(void);
 void TransmitirDatos(unsigned int Ent1, unsigned int Ent2);
 void ColorRGB(unsigned int val);
 unsigned int Conversion(unsigned char);
-void SaveData_EEPROM(unsigned int dir, unsigned char Dato);
-unsigned char ReadData_EEPROM(unsigned int dir);
+void GuardarDatoEnEEPROM(unsigned int dir, unsigned char Dato);
+unsigned char leerDatoEnEEPROM(unsigned int dir);
 
 
 
 void main(void) {
 
 
-OSCCON = 0b01110000;
-_delay((unsigned long)((10)*(8000000/4000.0)));
+ConfiguraLCD(4);
+OSCCON = 0b01110110;
+_delay((unsigned long)((1)*(8000000/4000.0)));
+LATC2 = 0;
 TXSTA = 0b00100000;
 RCSTA = 0b10010000;
 BAUDCON = 0b00000000;
 
+TRISE=0;
 SPBRG = 12;
 
 ADCON0 = 0b00000001;
-ADCON1 = 13;
+ADCON1 = 14;
 ADCON2 = 0b10001000;
 
 
-TRISB = 0;
+TRISB = 0b00001110;
 TRISD = 0;
-TRISA = 0b00000001;
+TRISA0 = 1;
+TRISC = 0b11010111;
 USBEN = 0;
 UTRDIS = 1;
-TRISC = 0b11110110;
 RBPU = 0;
-LATC2 = 0;
-Temperatura_EEPROM = ReadData_EEPROM(0);
 
-ConfiguraLCD(4);
+TempEEPROM = leerDatoEnEEPROM(0);
+
 InicializaLCD();
 
-
-T0CON=0b10000011;
+T0CON=0b00000011;
 TMR0IF=0;
 TMR0=3036;
 TMR0IE=1;
 GIE=1;
 TMR0ON=1;
 
-
 BorraLCD();
 
-if (Temperatura_EEPROM != 0xFF) {
+if (TempEEPROM != 0xFF) {
 MensajeLCD_Var("Ultima temp:");
 DireccionaLCD(192);
-EscribeLCD_c(Temperatura_EEPROM / 10 + 48);
-EscribeLCD_c(Temperatura_EEPROM % 10 + 48);
+EscribeLCD_c(TempEEPROM / 10 + 48);
+EscribeLCD_c(TempEEPROM % 10 + 48);
+EscribeLCD_c(223);
 EscribeLCD_c('C');
 _delay((unsigned long)((2000)*(8000000/4000.0)));
 BorraLCD();
@@ -5984,52 +5984,54 @@ BorraLCD();
 
 MensajeLCD_Var("Iniciando");
 _delay((unsigned long)((500)*(8000000/4000.0)));
-EscribeLCD_c(46);
+EscribeLCD_c('.');
 _delay((unsigned long)((500)*(8000000/4000.0)));
-EscribeLCD_c(46);
+EscribeLCD_c('.');
 _delay((unsigned long)((500)*(8000000/4000.0)));
-EscribeLCD_c(46);
+EscribeLCD_c('.');
 _delay((unsigned long)((500)*(8000000/4000.0)));
 BorraLCD();
+_delay((unsigned long)((500)*(8000000/4000.0)));
 
-
+MensajeLCD_Var("Temp:");
+_delay((unsigned long)((500)*(8000000/4000.0)));
+DireccionaLCD(0xC0);
+MensajeLCD_Var("Hum:");
 while (1) {
 _delay((unsigned long)((500)*(8000000/4000.0)));
 
 _delay((unsigned long)((500)*(8000000/4000.0)));
 
-LeerDHT11();
+LeerHT11();
+_delay((unsigned long)((100)*(8000000/4000.0)));
 
-SaveData_EEPROM(0, Temperatura);
-ColorRGB(Temperatura);
+GuardarDatoEnEEPROM(0, Temp);
+_delay((unsigned long)((100)*(8000000/4000.0)));
+ColorRGB(Temp);
+_delay((unsigned long)((100)*(8000000/4000.0)));
 
-
-if(!RC1) TransmitirDatos(RC4, RC5);
+if(!RC4) TransmitirDatos(RB1, RB2);
 else TransmitirDatos(A, B);
 Conversion(0);
 RB0 = (ADRES <= 511) ? 0 : 1;
 }
 }
 
-void LeerDHT11(void) {
-unsigned char i, contr = 0;
+void LeerHT11(void) {
 
 TRISC2 = 0;
 _delay((unsigned long)((18)*(8000000/4000.0)));
-
 TRISC2 = 1;
-while (RC2 == 1);
-_delay((unsigned long)((40)*(8000000/4000000.0)));
-if (RC2 == 0) contr++;
-_delay((unsigned long)((80)*(8000000/4000000.0)));
 
-if (RC2 == 1) contr++;
+while (RC2 == 1);
+_delay((unsigned long)((120)*(8000000/4000000.0)));
 while (RC2 == 1);
 
-# 135
-Humedad = 0;
-Temperatura = 42;
-Che = 0;
+Hum = LeerByte();
+LeerByte();
+Temp = LeerByte();
+LeerByte();
+LeerByte();
 }
 
 unsigned char LeerByte(void) {
@@ -6053,13 +6055,6 @@ while (RC2 == 1);
 return res;
 }
 
-unsigned char Check(void) {
-unsigned char res = 0, aux;
-aux = Temperatura + Humedad;
-if (aux == Che) res = 1;
-return res;
-}
-
 void Transmitir(unsigned char BufferT) {
 while (TRMT == 0);
 TXREG = BufferT;
@@ -6071,24 +6066,24 @@ return RCREG;
 }
 
 void TransmitirDatos(unsigned int Ent1, unsigned int Ent2) {
-unsigned int n = Ent1 * 10 + Ent2, TemperaturaC = Temperatura, HumedadC = Humedad;
+unsigned int n = Ent1 * 10 + Ent2, TempC = Temp, HumC = Hum;
 unsigned int Simb = 67;
-BorraLCD();
+
 switch (n) {
 case 00:
-TemperaturaC = Temperatura;
+TempC = Temp;
 Simb = 67;
 break;
 case 01:
-TemperaturaC = Temperatura + 273;
+TempC = Temp + 273;
 Simb = 75;
 break;
 case 10:
-TemperaturaC = Temperatura * 9 / 5 + 492;
+TempC = Temp * 9 / 5 + 492;
 Simb = 82;
 break;
 case 11:
-TemperaturaC = Temperatura * 9 / 5 + 32;
+TempC = Temp * 9 / 5 + 32;
 Simb = 70;
 break;
 }
@@ -6099,15 +6094,15 @@ Transmitir('p');
 Transmitir(':');
 Transmitir(' ');
 
-MensajeLCD_Var("Temperatura:");
-if (TemperaturaC / 100 > 0) {
-Transmitir(TemperaturaC / 100 + 48);
-EscribeLCD_c(TemperaturaC / 100 + 48);
-TemperaturaC = TemperaturaC % 100;
+DireccionaLCD(0x85);
+if (TempC / 100 > 0) {
+Transmitir(TempC / 100 + 48);
+EscribeLCD_c(TempC / 100 + 48);
+TempC = TempC % 100;
 }
-Transmitir(TemperaturaC / 10 + 48);
-Transmitir(TemperaturaC % 10 + 48);
-Transmitir(167);
+Transmitir(TempC / 10 + 48);
+Transmitir(TempC % 10 + 48);
+if (Simb==70 | Simb == 67) Transmitir(223);
 Transmitir(Simb);
 Transmitir(' ');
 Transmitir('\n');
@@ -6116,58 +6111,57 @@ Transmitir('u');
 Transmitir('m');
 Transmitir(':');
 Transmitir(' ');
-Transmitir(Humedad / 10 + 48);
-Transmitir(Humedad % 10 + 48);
+Transmitir(Hum / 10 + 48);
+Transmitir(Hum % 10 + 48);
 Transmitir(' ');
 Transmitir('%');
 Transmitir('\n');
 Transmitir(' ');
 
-# 237
-EscribeLCD_c(TemperaturaC / 10 + 48);
-EscribeLCD_c(TemperaturaC % 10 + 48);
+EscribeLCD_c(TempC / 10 + 48);
+EscribeLCD_c(TempC % 10 + 48);
+if (Simb==70 | Simb == 67) EscribeLCD_c(223);
 EscribeLCD_c(Simb);
-DireccionaLCD(192);
-MensajeLCD_Var("Humedad:");
-EscribeLCD_c(Humedad / 10 + 48);
-EscribeLCD_c(Humedad % 10 + 48);
+DireccionaLCD(0xC4);
+EscribeLCD_c(Hum / 10 + 48);
+EscribeLCD_c(Hum % 10 + 48);
 EscribeLCD_c('%');
 
 }
 
 void ColorRGB(unsigned int val) {
 if (val < 22) {
-RB7 = 0;
-RB6 = 0;
 RB5 = 0;
+RB6 = 0;
+RB7 = 0;
 } else if (val >= 22 && val < 25) {
-RB7 = 1;
-RB6 = 0;
 RB5 = 1;
+RB6 = 0;
+RB7 = 1;
 } else if (val >= 25 && val < 28) {
-RB7 = 0;
-RB6 = 0;
 RB5 = 1;
+RB6 = 0;
+RB7 = 0;
 } else if (val >= 28 && val < 31) {
-RB7 = 0;
-RB6 = 1;
 RB5 = 1;
+RB6 = 1;
+RB7 = 0;
 } else if (val >= 31 && val < 34) {
+RB5 = 0;
+RB6 = 1;
 RB7 = 0;
-RB6 = 1;
-RB5 = 0;
 } else if (val >= 34 && val < 37) {
-RB7 = 1;
-RB6 = 1;
 RB5 = 0;
-} else if (val >= 37 && val < 40) {
+RB6 = 1;
 RB7 = 1;
+} else if (val >= 37 && val < 42) {
+RB5 = 0;
 RB6 = 0;
-RB5 = 0;
-} else if (val >= 40) {
 RB7 = 1;
-RB6 = 1;
+} else if (val >= 42) {
 RB5 = 1;
+RB6 = 1;
+RB7 = 1;
 }
 }
 
@@ -6178,7 +6172,7 @@ while (GO == 1);
 return ADRES;
 }
 
-void SaveData_EEPROM(unsigned int dir, unsigned char dato) {
+void GuardarDatoEnEEPROM(unsigned int dir, unsigned char dato) {
 EEADR = dir;
 EEDATA = dato;
 
@@ -6198,7 +6192,7 @@ WREN = 0;
 
 }
 
-unsigned char ReadData_EEPROM(unsigned int dir) {
+unsigned char leerDatoEnEEPROM(unsigned int dir) {
 EEADR = dir;
 EEPGD = 0;
 CFGS = 0;
@@ -6210,7 +6204,7 @@ return EEDATA;
 void __interrupt() ISR(void){
 if(TMR0IF){
 TMR0IF=0;
-RC0 = !RC0;
+RE2 = !RE2;
 TMR0 = 3036;
 
 }
@@ -6236,7 +6230,6 @@ default:
 break;
 }
 _delay((unsigned long)((100)*(8000000/4000.0)));
-
+}
 }
 
-}
