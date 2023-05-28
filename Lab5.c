@@ -203,7 +203,6 @@ void TransmitirDatos(unsigned int Ent1, unsigned int Ent2) {
     }
     Transmitir(TempC / 10 + 48);
     Transmitir(TempC % 10 + 48);
-    if (Simb==70 | Simb == 67) Transmitir(223);
     Transmitir(Simb);
     Transmitir(' ');
     Transmitir('\n');
