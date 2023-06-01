@@ -40,13 +40,13 @@ void main(void) {
     DATA_OUT = 0;
     TXSTA = 0b00100000; //Configuraci?n del transmisor, habilitaci?n del transmisor y modo asincr?nico, bajas velocidades
     RCSTA = 0b10010000; //Configuraci?n del receptor, habilitaci?n del modulo EUSART, se habilita el receptor
-    BAUDCON = 0b00000000; //Configuracion del modulo adc, no inversion logica, divisor de frecuencia 8bits, modo bajo consumo desactivado,
+    BAUDCON = 0b00000000; //Configuracion del TXRX, no inversion logica, divisor de frecuencia 8bits, modo bajo consumo desactivado,
     //autodeteccion de velocidad off.
     TRISE=0;
     SPBRG = 12; //Valor para la vel de transmisi?n de datos, revisar formula -> SPBRG = 8M/(64*9600)-1
     //ConfigADC
-    ADCON0 = 0b00000001;
-    ADCON1 = 14;
+    ADCON0 = 0b00000001;//Canal, en progreso o terminado, habilitado o no
+    ADCON1 = 14;//Voltajes de referencia VDD y VSS, solo AN0 como analogo y los demas digitales.
     ADCON2 = 0b10001000; //Justificacion a derecha, adquisicion instantanea
     //Fin config ADC
     //CONFIGURACION DE PUERTOS I/O
@@ -55,12 +55,13 @@ void main(void) {
     TRISA0 = 1; //Colocar pines A00 como entrada digital para ADC
     TRISC = 0b11010111; //Colocar Pines C0 y C1 como entrada (seleccion de temperatura) C2- SENSOR, C4-Selector cambio unidad envio datos RC6 como entrada TX, para lectura RC7 RX
     USBEN = 0;//habilita RC4 y RC5 desabilitando modulo USB
-    UTRDIS = 1;
+    UTRDIS = 1;//inhabilita el transciever
     RBPU = 0; //Activar resistencias pull up
     
     TemperaturaEEPROM = ReadData(0);
     
     InicializaLCD(); //Funcion para configuracion inicial del LCD
+    
     //Timer0 interrupcion
     T0CON=0b00000011;//No habilita timer0, 16 bits de resolucion, reloj interno
     TMR0IF=0;// apaga bandera
@@ -112,8 +113,8 @@ void main(void) {
         
         if(!RC4) TransmitirDatos(RB1, RB2);
         else TransmitirDatos(A, B);
-        ADC_Conv(0);
-        RB0 = (ADRES <= 511) ? 0 : 1; //2.5*(2^10-1)/5 
+        ADC_Conv(0); 
+        RB0 = (ADRES <= 511) ? 0 : 1; //2.5*(2^10-1)/5 ADC
     }
 }
 
@@ -168,7 +169,6 @@ unsigned char Recibir(void){
 void TransmitirDatos(unsigned int Ent1, unsigned int Ent2) {
     unsigned int n = Ent1 * 10 + Ent2, TempC = Temperatura, HumC = Humedad;
     unsigned int Simb = 67;
-    //BorraLCD();
     switch (n) {
         case 00://Celsius
             TempC = Temperatura;
