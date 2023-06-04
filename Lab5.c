@@ -63,7 +63,7 @@ void main(void) {
     InicializaLCD(); //Funcion para configuracion inicial del LCD
     
     //Timer0 interrupcion
-    T0CON=0b00000011;//No habilita timer0, 16 bits de resolucion, reloj interno
+    T0CON=0b00001011;//No habilita timer0, 16 bits de resolucion, reloj interno
     TMR0IF=0;// apaga bandera
     TMR0=3036; // valor pre carga
     TMR0IE=1; //Habilita la interrupcion 
@@ -108,13 +108,18 @@ void main(void) {
         //IniFlag = 1;
         SaveData(0, Temperatura);
         __delay_ms(100);
+        
         ColorRGB(Temperatura); 
         __delay_ms(100);
         
         if(!RC4) TransmitirDatos(RB1, RB2);
         else TransmitirDatos(A, B);
         ADC_Conv(0); 
-        RB0 = (ADRES <= 511) ? 0 : 1; //2.5*(2^10-1)/5 ADC
+        if (ADRES <= 511){//2.5*(2^10-1)/5 ADC
+            RB0 = 0;
+        }else{
+            RB0 = 1;
+        }
     }
 }
 

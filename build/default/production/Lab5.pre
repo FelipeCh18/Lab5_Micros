@@ -5911,24 +5911,23 @@ EscribeLCD_c(mapeo [i]);
 #pragma config LVP=OFF
 
 # 15
-unsigned char Temp, Hum;
-unsigned char TempEEPROM;
+unsigned char Temperatura, Humedad;
+unsigned char TemperaturaEEPROM;
 unsigned int A=0,B= 0;
 
 
 
 
-void LeerHT11(void);
+void LeerDHT11(void);
 unsigned char LeerByte(void);
 unsigned char LeerBit(void);
 void Transmitir(unsigned char);
 unsigned char Recibir(void);
 void TransmitirDatos(unsigned int Ent1, unsigned int Ent2);
 void ColorRGB(unsigned int val);
-unsigned int Conversion(unsigned char);
-void GuardarDatoEnEEPROM(unsigned int dir, unsigned char Dato);
-unsigned char leerDatoEnEEPROM(unsigned int dir);
-
+unsigned int ADC_Conv(unsigned char);
+void SaveData(unsigned int dir, unsigned char Dato);
+unsigned char ReadData(unsigned int dir);
 
 
 void main(void) {
@@ -5958,11 +5957,12 @@ USBEN = 0;
 UTRDIS = 1;
 RBPU = 0;
 
-TempEEPROM = leerDatoEnEEPROM(0);
+TemperaturaEEPROM = ReadData(0);
 
 InicializaLCD();
 
-T0CON=0b00000011;
+
+T0CON=0b00001011;
 TMR0IF=0;
 TMR0=3036;
 TMR0IE=1;
@@ -5971,11 +5971,11 @@ TMR0ON=1;
 
 BorraLCD();
 
-if (TempEEPROM != 0xFF) {
+if (TemperaturaEEPROM != 0xFF) {
 MensajeLCD_Var("Ultima temp:");
 DireccionaLCD(192);
-EscribeLCD_c(TempEEPROM / 10 + 48);
-EscribeLCD_c(TempEEPROM % 10 + 48);
+EscribeLCD_c(TemperaturaEEPROM / 10 + 48);
+EscribeLCD_c(TemperaturaEEPROM % 10 + 48);
 EscribeLCD_c(223);
 EscribeLCD_c('C');
 _delay((unsigned long)((2000)*(8000000/4000.0)));
@@ -6002,22 +6002,27 @@ _delay((unsigned long)((500)*(8000000/4000.0)));
 
 _delay((unsigned long)((500)*(8000000/4000.0)));
 
-LeerHT11();
+LeerDHT11();
 _delay((unsigned long)((100)*(8000000/4000.0)));
 
-GuardarDatoEnEEPROM(0, Temp);
+SaveData(0, Temperatura);
 _delay((unsigned long)((100)*(8000000/4000.0)));
-ColorRGB(Temp);
+
+ColorRGB(Temperatura);
 _delay((unsigned long)((100)*(8000000/4000.0)));
 
 if(!RC4) TransmitirDatos(RB1, RB2);
 else TransmitirDatos(A, B);
-Conversion(0);
-RB0 = (ADRES <= 511) ? 0 : 1;
+ADC_Conv(0);
+if (ADRES <= 511){
+RB0 = 0;
+}else{
+RB0 = 1;
+}
 }
 }
 
-void LeerHT11(void) {
+void LeerDHT11(void) {
 
 TRISC2 = 0;
 _delay((unsigned long)((18)*(8000000/4000.0)));
@@ -6027,9 +6032,9 @@ while (RC2 == 1);
 _delay((unsigned long)((120)*(8000000/4000000.0)));
 while (RC2 == 1);
 
-Hum = LeerByte();
+Humedad = LeerByte();
 LeerByte();
-Temp = LeerByte();
+Temperatura = LeerByte();
 LeerByte();
 LeerByte();
 }
@@ -6066,24 +6071,23 @@ return RCREG;
 }
 
 void TransmitirDatos(unsigned int Ent1, unsigned int Ent2) {
-unsigned int n = Ent1 * 10 + Ent2, TempC = Temp, HumC = Hum;
+unsigned int n = Ent1 * 10 + Ent2, TempC = Temperatura, HumC = Humedad;
 unsigned int Simb = 67;
-
 switch (n) {
 case 00:
-TempC = Temp;
+TempC = Temperatura;
 Simb = 67;
 break;
 case 01:
-TempC = Temp + 273;
+TempC = Temperatura + 273;
 Simb = 75;
 break;
 case 10:
-TempC = Temp * 9 / 5 + 492;
+TempC = Temperatura * 9 / 5 + 492;
 Simb = 82;
 break;
 case 11:
-TempC = Temp * 9 / 5 + 32;
+TempC = Temperatura * 9 / 5 + 32;
 Simb = 70;
 break;
 }
@@ -6110,8 +6114,8 @@ Transmitir('u');
 Transmitir('m');
 Transmitir(':');
 Transmitir(' ');
-Transmitir(Hum / 10 + 48);
-Transmitir(Hum % 10 + 48);
+Transmitir(Humedad / 10 + 48);
+Transmitir(Humedad % 10 + 48);
 Transmitir(' ');
 Transmitir('%');
 Transmitir('\n');
@@ -6123,8 +6127,8 @@ if (Simb==70 | Simb == 67) EscribeLCD_c(223);
 EscribeLCD_c(Simb);
 EscribeLCD_c(' ');
 DireccionaLCD(0xC4);
-EscribeLCD_c(Hum / 10 + 48);
-EscribeLCD_c(Hum % 10 + 48);
+EscribeLCD_c(Humedad / 10 + 48);
+EscribeLCD_c(Humedad % 10 + 48);
 EscribeLCD_c('%');
 
 }
@@ -6165,14 +6169,14 @@ RB7 = 1;
 }
 }
 
-unsigned int Conversion(unsigned char canal) {
+unsigned int ADC_Conv(unsigned char canal) {
 ADCON0 = 0b00000001 | (canal << 2);
 GO = 1;
 while (GO == 1);
 return ADRES;
 }
 
-void GuardarDatoEnEEPROM(unsigned int dir, unsigned char dato) {
+void SaveData(unsigned int dir, unsigned char dato) {
 EEADR = dir;
 EEDATA = dato;
 
@@ -6192,7 +6196,7 @@ WREN = 0;
 
 }
 
-unsigned char leerDatoEnEEPROM(unsigned int dir) {
+unsigned char ReadData(unsigned int dir) {
 EEADR = dir;
 EEPGD = 0;
 CFGS = 0;
